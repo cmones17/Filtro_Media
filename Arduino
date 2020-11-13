@@ -1,0 +1,48 @@
+float v[7]={0.00,0.00,0.00,0.00,0.00,0.00,0.00};
+float d[7]={0.00,0.00,0.00,0.00,0.00,0.00,0.00};
+float aux=0.0;
+
+void setup() {
+  pinMode(A0,INPUT);
+  Serial.begin(9600);
+}
+
+float x=0.00;
+
+void loop() {
+  x=analogRead(A0);
+  x=(x*5)/(1023);
+  //vector de copia
+  d[6]=d[5];
+  d[5]=d[4];
+  d[4]=d[3];
+  d[3]=d[2];
+  d[2]=d[1];
+  d[1]=d[0];
+  d[0]=x;
+
+  v[6]=d[6];
+  v[5]=d[5];
+  v[4]=d[4];
+  v[3]=d[3];
+  v[2]=d[2];
+  v[1]=d[1];
+  v[0]=d[0];
+
+  //esto solo acomoda los valores de menor a mayor
+  int i,j;
+  for( j=0;j<7;j++)
+  {
+    for( i=0;i<6;i++)
+    {
+      if(v[i+1]<v[i])
+      {
+        aux=v[i];
+        v[i]=v[i+1];
+        v[i+1]=aux;
+      }
+    }
+  }
+  Serial.println(v[3]);
+      
+}
